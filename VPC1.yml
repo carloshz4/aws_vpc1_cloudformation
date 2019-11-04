@@ -8,3 +8,14 @@ Resources:
       Tags:
        - Key: Name
          Value: VPC1Cloudformation
+  IGWVPC1CloudFormation:
+    Type: 'AWS::EC2::InternetGateway'
+    Properties:
+      Tags:
+        - Key: Name
+          Value: IGWVPC1CloudFormation
+  IGWAttach:
+    Type: 'AWS::EC2::VPCGatewayAttachment'
+    Properties:
+      VpcId: !Ref VPC1lab
+      InternetGatewayId: !Ref IGWVPC1CloudFormation
