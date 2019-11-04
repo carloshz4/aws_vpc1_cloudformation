@@ -1,3 +1,5 @@
+AWSTemplateFormatVersion: "2010-09-09"
+
 Resources:
   VPC1lab:
     Type: AWS::EC2::VPC
@@ -62,3 +64,42 @@ Resources:
       RouteTableId: !Ref PublicRouteTableVPC1
       SubnetId: !Ref PublicSubnetVPC1CloudFormation
 
+  PublicInstance:
+    Type: AWS::EC2::Instance
+    Properties:
+      InstanceType: t2.nano
+      ImageId: ami-00bf61217e296b409
+      KeyName: test-1-Nov-2018
+      SecurityGroupIds: 
+      - !Ref PublicInstanceSG
+      SubnetId: !Ref PublicSubnetVPC1CloudFormation
+      Tags:
+        - Key: Name
+          Value: PublicInstance
+
+  PublicInstanceSG:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Security Group for Public Instance
+      GroupName: PublicSG     
+      VpcId: !Ref VPC1lab
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: 0.0.0.0/0
+
+  PrivateInstance:
+    Type: AWS::EC2::Instance
+    Properties:
+      InstanceType: t2.nano
+      ImageId: ami-00bf61217e296b409
+      KeyName: test-1-Nov-2018
+      SubnetId: !Ref PrivateSubnetVPC1CloudFormation
+      Tags:
+        - Key: Name
+          Value: PrivateInstance
