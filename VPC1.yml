@@ -19,3 +19,23 @@ Resources:
     Properties:
       VpcId: !Ref VPC1lab
       InternetGatewayId: !Ref IGWVPC1CloudFormation
+  PublicSubnetVPC1CloudFormation:
+    Type: 'AWS::EC2::Subnet'
+    Properties:
+      CidrBlock: 10.0.1.0/24
+      MapPublicIpOnLaunch: true
+      AvailabilityZone: "us-east-2a"
+      Tags:
+        - Key: Name
+          Value: PublicSubnetVPC1CloudFormation
+      VpcId: !Ref VPC1lab
+  PrivateSubnetVPC1CloudFormation:
+    Type: 'AWS::EC2::Subnet'
+    Properties:
+      CidrBlock: 10.0.2.0/24
+      MapPublicIpOnLaunch: false
+      AvailabilityZone: "us-east-2b"
+      Tags:
+        - Key: Name
+          Value: PrivateSubnetVPC1CloudFormation
+      VpcId: !Ref VPC1lab
