@@ -39,3 +39,26 @@ Resources:
         - Key: Name
           Value: PrivateSubnetVPC1CloudFormation
       VpcId: !Ref VPC1lab
+  PublicRouteTableVPC1:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId:  
+        Ref: VPC1lab
+      Tags:
+      - Key: Name
+        Value: PublicRouteTableVPC1
+  RoutetoInternet:
+    Type: AWS::EC2::Route
+    DependsOn: IGWAttach
+    Properties:
+       RouteTableId:
+         Ref: PublicRouteTableVPC1
+       DestinationCidrBlock: 0.0.0.0/0
+       GatewayId:
+         Ref: IGWVPC1CloudFormation
+  PublicSubnetRouteTableAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId: !Ref PublicRouteTableVPC1
+      SubnetId: !Ref PublicSubnetVPC1CloudFormation
+
